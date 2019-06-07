@@ -13,16 +13,6 @@ class Preset extends LaravelPreset
         File::cleanDirectory(resource_path('sass'));
     }
 
-    public static function getPackagesTobeInstalled()
-    {
-        return [
-            'inertiajs/inertia-laravel',
-            'squizlabs/php_codesniffer',
-            'pragmarx/version',
-            'jackiedo/dotenv-editor'
-        ];
-    }
-
     public static function install()
     {
         static::updatePackages();
