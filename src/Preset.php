@@ -13,13 +13,44 @@ class Preset extends LaravelPreset
         File::cleanDirectory(resource_path('sass'));
     }
 
+    public static function getPackagesTobeInstalled()
+    {
+        return [
+            'inertiajs/inertia-laravel',
+            'squizlabs/php_codesniffer',
+            'pragmarx/version',
+            'jackiedo/dotenv-editor'
+        ];
+    }
+
     public static function install()
     {
         static::updatePackages();
         static::updateMix();
         static::updateScripts();
         static::updateStyles();
-        static::installPackages(static::getPackagesTobeInstalled());
+        static::installPackages();
+    }
+
+    public static function installPackages()
+    {
+        $package1 = exec('composer show -N | grep inertiajs/inertia-laravel');
+
+        if (!$package1) {
+            exec('composer require intertiajs/inertia-laravel');
+        }
+
+        $package2 = exec('composer show -N | grep pragmarx/version');
+
+        if (!$package2) {
+            exec('composer require pragmarx/version');
+        }
+
+        $package3 = exec('composer show -N | grep jackiedo/dotenv-editor');
+
+        if (!$package3) {
+            exec('composer require jackiedo/dotenv-editor');
+        }
     }
 
     public static function packagesToBeAdded()
@@ -36,7 +67,6 @@ class Preset extends LaravelPreset
     public static function packagesTobeRemoved($packages)
     {
         return Arr::except($packages, ['popper.js', 'jquery']);
-
     }
 
     /**
@@ -62,26 +92,5 @@ class Preset extends LaravelPreset
     public static function updatemix()
     {
         copy(__DIR__.'/stubs/webpack.mix.js', base_path('webpack.mix.js'));
-    }
-
-    public static function getPackagesTobeInstalled()
-    {
-        return [
-            'inertiajs/inertia-laravel',
-            'squizlabs/php_codesniffer',
-            'pragmarx/version',
-            'jackiedo/dotenv-editor',
-        ];
-    }
-
-    public static function installPackages(array $array)
-    {
-        foreach ($array as $value) {
-            $package =exec('composer show -N | grep ${value}');
-
-            if (!$package) {
-                exec('composer require ${value}');
-            }
-        }
     }
 }
