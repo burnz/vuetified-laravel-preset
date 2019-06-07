@@ -1,0 +1,38 @@
+{
+  "name": "codeitlikemiley/vuetified-laravel-preset",
+  "description": "Vuetified Frontend Preset",
+  "keywords": [
+    "laravel",
+    "laravel-preset",
+    "vuetified",
+    "vuetify",
+    "laravel-echo-server",
+    "laravel-echo",
+    "laravel-websockets",
+    "php-pushder-server",
+    "pusher-js"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Uriah Galang",
+      "email": "codeitlikemiley@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "Codeitlikemiley\\VuetifiedLaravelPreset\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Codeitlikemiley\\VuetifiedLaravelPreset\\VuetifiedServiceProvider"
+      ]
+    }
+  },
+  "require": {
+    "squizlabs/php_codesniffer": "^3.4"
+  }
+}
