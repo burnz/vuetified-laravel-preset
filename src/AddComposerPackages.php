@@ -6,7 +6,7 @@ use Illuminate\Support\Arr;
 use Nadar\PhpComposerReader\ComposerReader;
 use Nadar\PhpComposerReader\RequireSection;
 
-class Composer
+class AddComposerPackages
 {
     /**
      * @var mixed
@@ -50,15 +50,6 @@ class Composer
     public function getPackakges()
     {
         return $this->packages;
-    }
-
-    /**
-     * @param  $packages
-     * @return mixed
-     */
-    public function removePackages($packages)
-    {
-        return $this->packages = Arr::except($this->packages, $packages);
     }
 
     public function save()

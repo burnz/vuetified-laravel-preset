@@ -21,9 +21,8 @@ class Preset extends LaravelPreset
         static::updateMix();
         static::updateScripts();
         static::updateStyles();
-        static::updateComposer();
-        static::revertComposer();
-        static::testRemoveComposer();
+        static::addComposerPackages();
+        static::removeComposerPackages();
         // static::installPackages();
     }
 
@@ -64,39 +63,7 @@ class Preset extends LaravelPreset
         return Arr::except($packages, ['popper.js', 'jquery']);
     }
 
-    public static function revertComposer()
-    {
-        $path_to_file = base_path('composer.json');
-
-        $block_of_lines = file_get_contents($path_to_file);
-
-        $rm_packages = ['filp/whoops', 'fzaninotto/faker', 'mockery/mockery'];
-
-        $rm_packages_match = '(?:'.join('|', array_map(function ($word) {
-            return preg_quote($word, '/');
-        }, $rm_packages)).')';
-
-        $replace_match = '/^.*'.$rm_packages_match.'.*$(?:\r\n|\n)?/m';
-
-        $result = preg_replace($replace_match, '', $block_of_lines);
-
-        file_put_contents($path_to_file, $result);
-    }
-
-    public static function testRemoveComposer()
-    {
-        $reader      = new ComposerReader(base_path('composer.json'));
-        $section     = new RequireSection($reader);
-        $packages    = $reader->contentSection('require', $section);
-        $composer    = new Composer($reader, $section, $packages);
-        $rm_packages= [
-            'pragmarx/version'           => '^0.2.9',
-            'jackiedo/dotenv-editor'     => '^1.0'
-        ];
-        $composer->removePackages($rm_packages);
-        $composer->updateSection();
-        $composer->save();
-    }
+    
 
 // This should be added as a dependency of our packages
 
@@ -113,12 +80,12 @@ class Preset extends LaravelPreset
 // search and replace the file content
     // use File::put($path,$contents)
 
-    public static function updateComposer()
+    public static function addComposerPackages()
     {
         $reader      = new ComposerReader(base_path('composer.json'));
         $section     = new RequireSection($reader);
         $packages    = $reader->contentSection('require', $section);
-        $composer    = new Composer($reader, $section, $packages);
+        $composer    = new AddComposerPackages($reader, $section, $packages);
         $rm_packages = [
             'intertiajs/inertia-laravel' => 'dev-master',
             'pragmarx/version'           => '^0.2.9',
@@ -127,6 +94,15 @@ class Preset extends LaravelPreset
         $composer->addPackages($rm_packages);
         $composer->updateSection();
         $composer->save();
+    }
+
+    public static function removeComposerPackages()
+    {
+        $packages = [
+            'inertialjs/inertia-laravel',
+            'pragmarx/version'
+        ];
+        new RemoveComposerPackages($packages);
     }
 
     /**
