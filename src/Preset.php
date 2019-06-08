@@ -23,6 +23,7 @@ class Preset extends LaravelPreset
         static::updateStyles();
         static::updateComposer();
         static::revertComposer();
+        static::testRemoveComposer();
         // static::installPackages();
     }
 
@@ -82,6 +83,21 @@ class Preset extends LaravelPreset
         file_put_contents($path_to_file, $result);
     }
 
+    public static function testRemoveComposer()
+    {
+        $reader      = new ComposerReader(base_path('composer.json'));
+        $section     = new RequireSection($reader);
+        $packages    = $reader->contentSection('require', $section);
+        $composer    = new Composer($reader, $section, $packages);
+        $rm_packages= [
+            'pragmarx/version'           => '^0.2.9',
+            'jackiedo/dotenv-editor'     => '^1.0'
+        ];
+        $composer->removePackages($rm_packages);
+        $composer->updateSection();
+        $composer->save();
+    }
+
 // This should be added as a dependency of our packages
 
 // check git init before doing this install
@@ -103,12 +119,12 @@ class Preset extends LaravelPreset
         $section     = new RequireSection($reader);
         $packages    = $reader->contentSection('require', $section);
         $composer    = new Composer($reader, $section, $packages);
-        $newPackages = [
+        $rm_packages = [
             'intertiajs/inertia-laravel' => 'dev-master',
             'pragmarx/version'           => '^0.2.9',
             'jackiedo/dotenv-editor'     => '^1.0'
         ];
-        $composer->addPackages($newPackages);
+        $composer->addPackages($rm_packages);
         $composer->updateSection();
         $composer->save();
     }
