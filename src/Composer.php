@@ -68,6 +68,6 @@ class Composer
 
     public function updateSection()
     {
-        $this->reader->updateSectio('require', $this->packages);
+        $this->reader->updateSection('require', $this->packages);
     }
 }
