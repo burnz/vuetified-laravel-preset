@@ -22,6 +22,7 @@ class Preset extends LaravelPreset
         static::updateScripts();
         static::updateStyles();
         static::updateComposer();
+        static::revertComposer();
         // static::installPackages();
     }
 
@@ -60,6 +61,25 @@ class Preset extends LaravelPreset
     public static function packagesTobeRemoved($packages)
     {
         return Arr::except($packages, ['popper.js', 'jquery']);
+    }
+
+    public static function revertComposer()
+    {
+        $path_to_file = base_path('composer.json');
+
+        $block_of_lines = file_get_contents($path_to_file);
+
+        $rm_packages = ['filp/whoops', 'fzaninotto/faker', 'mockery/mockery'];
+
+        $rm_packages_match = '(?:'.join('|', array_map(function ($word) {
+            return preg_quote($word, '/');
+        }, $rm_packages)).')';
+
+        $replace_match = '/^.*'.$rm_packages_match.'.*$(?:\r\n|\n)?/m';
+
+        $result = preg_replace($replace_match, '', $block_of_lines);
+
+        file_put_contents($path_to_file, $result);
     }
 
 // This should be added as a dependency of our packages
