@@ -21,12 +21,14 @@ class Preset extends LaravelPreset
         static::updateMix();
         static::updateScripts();
         static::updateStyles();
+
+        // All about composer
         static::addComposerPackages();
         static::removeComposerPackages();
-        // static::installPackages();
+        // static::composerInstall();
     }
 
-    public static function installPackages()
+    public static function composerInstall()
     {
         $package1 = exec('composer show -N | grep inertiajs/inertia-laravel');
 
@@ -102,7 +104,8 @@ class Preset extends LaravelPreset
             'inertialjs/inertia-laravel',
             'pragmarx/version'
         ];
-        new RemoveComposerPackages($packages);
+        $composer = new RemoveComposerPackages($packages);
+        $composer->delete();
     }
 
     /**

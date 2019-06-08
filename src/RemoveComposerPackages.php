@@ -17,7 +17,7 @@ class RemoveComposerPackages
         $this->packages = $packages;
     }
 
-    public function __invoke()
+    public function delete()
     {
         $path_to_file = base_path('composer.json');
 
