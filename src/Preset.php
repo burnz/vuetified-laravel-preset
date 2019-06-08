@@ -10,63 +10,6 @@ use Illuminate\Foundation\Console\Presets\Preset as LaravelPreset;
 
 class Preset extends LaravelPreset
 {
-    public static function cleanSassDirectory()
-    {
-        File::cleanDirectory(resource_path('sass'));
-    }
-
-    public static function install()
-    {
-        static::updatePackages();
-        static::updateMix();
-        static::updateScripts();
-        static::updateStyles();
-
-        // All about composer
-        static::addComposerPackages();
-        static::removeComposerPackages();
-        // static::composerInstall();
-    }
-
-    public static function composerInstall()
-    {
-        $package1 = exec('composer show -N | grep inertiajs/inertia-laravel');
-
-        if (!$package1) {
-            exec('composer require intertiajs/inertia-laravel');
-        }
-
-        $package2 = exec('composer show -N | grep pragmarx/version');
-
-        if (!$package2) {
-            exec('composer require pragmarx/version');
-        }
-
-        $package3 = exec('composer show -N | grep jackiedo/dotenv-editor');
-
-        if (!$package3) {
-            exec('composer require jackiedo/dotenv-editor');
-        }
-    }
-
-    public static function packagesToBeAdded()
-    {
-        return [
-            'laravel-mix-tailwind' => '^0.1.0'
-            // add other packages here
-        ];
-    }
-
-    /**
-     * @param $packages
-     */
-    public static function packagesTobeRemoved($packages)
-    {
-        return Arr::except($packages, ['popper.js', 'jquery']);
-    }
-
-    
-
 // This should be added as a dependency of our packages
 
 // check git init before doing this install
@@ -96,6 +39,57 @@ class Preset extends LaravelPreset
         $composer->addPackages($rm_packages);
         $composer->updateSection();
         $composer->save();
+    }
+
+    public static function cleanSassDirectory()
+    {
+        File::cleanDirectory(resource_path('sass'));
+    }
+
+    public static function composerInstall()
+    {
+        $packages = [
+            'inertiajs/inertia-laravel',
+            'pragmarx/version'
+        ];
+
+        foreach ($packages as $package) {
+            $installed = exec('composer show -N | grep '.$package);
+
+            if (!$installed) {
+                exec('composer require '.$package);
+            }
+        }
+    }
+
+    public static function install()
+    {
+        static::updatePackages();
+        static::updateMix();
+        static::updateScripts();
+        static::updateStyles();
+
+// All about composer
+
+// static::addComposerPackages();
+        // static::removeComposerPackages();
+        static::composerInstall();
+    }
+
+    public static function packagesToBeAdded()
+    {
+        return [
+            'laravel-mix-tailwind' => '^0.1.0'
+            // add other packages here
+        ];
+    }
+
+    /**
+     * @param $packages
+     */
+    public static function packagesTobeRemoved($packages)
+    {
+        return Arr::except($packages, ['popper.js', 'jquery']);
     }
 
     public static function removeComposerPackages()

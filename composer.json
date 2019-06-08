@@ -34,6 +34,7 @@
   },
   "require": {
     "squizlabs/php_codesniffer": "^3.4",
-    "nadar/php-composer-reader": "^1.2"
+    "nadar/php-composer-reader": "^1.2",
+    "jackiedo/dotenv-editor": "^1.0"
   }
 }
