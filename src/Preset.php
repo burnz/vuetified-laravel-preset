@@ -4,6 +4,8 @@ namespace Codeitlikemiley\VuetifiedLaravelPreset;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Nadar\PhpComposerReader\ComposerReader;
+use Nadar\PhpComposerReader\RequireSection;
 use Illuminate\Foundation\Console\Presets\Preset as LaravelPreset;
 
 class Preset extends LaravelPreset
@@ -19,7 +21,8 @@ class Preset extends LaravelPreset
         static::updateMix();
         static::updateScripts();
         static::updateStyles();
-        static::installPackages();
+        static::updateComposer();
+        // static::installPackages();
     }
 
     public static function installPackages()
@@ -57,6 +60,37 @@ class Preset extends LaravelPreset
     public static function packagesTobeRemoved($packages)
     {
         return Arr::except($packages, ['popper.js', 'jquery']);
+    }
+
+// This should be added as a dependency of our packages
+
+// check git init before doing this install
+
+// thow an error and abort install if not git initA
+
+// Review Laravel FileSystem
+
+// get the current file content
+
+// File::get($path)
+
+// search and replace the file content
+    // use File::put($path,$contents)
+
+    public static function updateComposer()
+    {
+        $reader      = new ComposerReader(base_path('composer.json'));
+        $section     = new RequireSection($reader);
+        $packages    = $reader->contentSection('require', $section);
+        $composer    = new Composer($reader, $section, $packages);
+        $newPackages = [
+            'intertiajs/inertia-laravel' => 'dev-master',
+            'pragmarx/version'           => '^0.2.9',
+            'jackiedo/dotenv-editor'     => '^1.0'
+        ];
+        $composer->addPackages($newPackages);
+        $composer->updateSection();
+        $composer->save();
     }
 
     /**
