@@ -86,6 +86,7 @@ class Preset extends LaravelPreset
         static::addPHPCS();
         static::addInertiaJs();
         static::updateStyles();
+        static::updateScripts();
         static::updatePackages();
         static::composerInstall();
         static::npmInstall();
@@ -138,6 +139,9 @@ class Preset extends LaravelPreset
     {
         File::delete(resource_path('js/bootstrap.js'));
         static::consoleLog('Boostrap.js Deleted');
+
+        copy(__DIR__.'/stubs/Inertia/app.js', resource_path('js/app.js'));
+        static::consoleLog('Inertia Default app.js file Added.');
     }
 
     public static function updateStyles()
