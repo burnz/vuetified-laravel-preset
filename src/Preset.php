@@ -4,49 +4,29 @@ namespace Codeitlikemiley\VuetifiedLaravelPreset;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use Nadar\PhpComposerReader\ComposerReader;
-use Nadar\PhpComposerReader\RequireSection;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Illuminate\Foundation\Console\Presets\Preset as LaravelPreset;
 
 class Preset extends LaravelPreset
 {
-    public static function addComposerPackages()
-    {
-        $reader      = new ComposerReader(base_path('composer.json'));
-        $section     = new RequireSection($reader);
-        $packages    = $reader->contentSection('require', $section);
-        $composer    = new AddComposerPackages($reader, $section, $packages);
-        $rm_packages = [
-            'intertiajs/inertia-laravel' => 'dev-master',
-            'pragmarx/version'           => '^0.2.9',
-            'jackiedo/dotenv-editor'     => '^1.0'
-        ];
-        $composer->addPackages($rm_packages);
-        $composer->updateSection();
-        $composer->save();
-        $array_keys = array_keys($rm_packages);
-        $str        = implode(', ', $array_keys);
-        static::consoleLog('The Following Packages are Added '.$str);
-    }
-
     public static function addInertiaJs()
     {
-        copy(__DIR_.'/stubs/Inertia/.babelrc', base_path('.babelrc'));
+        copy(__DIR__.'/stubs/Inertia/.babelrc', base_path('.babelrc'));
         static::consoleLog('Adding .babelrc file');
+
         copy(__DIR__.'/stubs/Inertia/app.blade.php', resource_path('views/app.blade.php'));
-        static::consoleLog('Adding Default Inertial app.blade.php');
-        File::makeDirectory(resource_path('js/Shared'));
-        static::consoleLog('Adding Shared Directory for Inertia');
+        static::consoleLog('Adding Default Inertia app.blade.php');
+
         copy(__DIR__.'/stubs/Inertia/Shared/Layout.vue', resource_path('/js/Shared/Layout.vue'));
         static::consoleLog('Adding Default Layout of Inertia');
+
         copy(__DIR__.'/stubs/Inertia/webpack.mix.js', base_path('webpack.mix.js'));
         static::consoleLog('Adding Default webpack.mix.js for Inertia');
+
         File::deleteDirectory(resource_path('js/components'));
         static::consoleLog('Components Directory Deleted.');
-        File::makeDirectory(resource_path('js/Pages'));
-        static::consoleLog('Created Pages Directory for Intertia');
-        File::copyDirectory(__DIR.'/stubs/Inertia/Pages',resource_path('js/Pages'));
+
+        File::copyDirectory(__DIR__.'/stubs/Inertia/Pages', resource_path('js/Pages'));
         static::consoleLog('Copying Pages Directory');
         // find a way to add kernel changes by inertia using php filesystem
     }
@@ -59,21 +39,14 @@ class Preset extends LaravelPreset
             exec('composer require --dev squizlabs/php_codesniffer');
         }
 
-        copy(__DIR__.'/phpcs.xml', base_path('.phpcs.xml'));
+        copy(__DIR__.'/stubs/phpcs.xml', base_path('phpcs.xml'));
         static::consoleLog('PHPCS Installed.');
     }
 
     public static function addVSCodeConfig()
     {
-        File::makeDirectory(base_path('.vscode'));
-        copy(__DIR_.'./stubs/.vscode/settings.json', base_path('.vscode/settings.json'));
+        File::copyDirectory(__DIR__.'/stubs/.vscode', base_path('.vscode'));
         static::consoleLog('VSCODE Config Added.');
-    }
-
-    public static function cleanSassDirectory()
-    {
-        File::cleanDirectory(resource_path('sass'));
-        static::consoleLog('SASS Directory Cleaned');
     }
 
     public static function composerInstall()
@@ -107,18 +80,12 @@ class Preset extends LaravelPreset
     public static function install()
     {
         static::addVSCodeConfig();
-        static::addInertiaJs();
         static::addPHPCS();
-        static::updatePackages();
-        static::updateMix();
-        static::updateScripts();
+        static::addInertiaJs();
         static::updateStyles();
-
-// All about composer
-
-// static::addComposerPackages();
-        // static::removeComposerPackages();
+        static::updatePackages();
         static::composerInstall();
+        static::yarnInstall();
     }
 
     /**
@@ -127,7 +94,6 @@ class Preset extends LaravelPreset
     public static function packagesToBeAdded()
     {
         $packages = [
-            'laravel-mix-tailwind'                => '^0.1.0',
             'inertiajs/inertia-vue'               => 'github:inertiajs/inertia-vue',
             '@babel/plugin-syntax-dynamic-import' => '^7.2.0'
             // add other packages here
@@ -150,19 +116,6 @@ class Preset extends LaravelPreset
         return Arr::except($packages, $rm_packages);
     }
 
-    public static function removeComposerPackages()
-    {
-        $packages = [
-            'inertialjs/inertia-laravel',
-            'pragmarx/version'
-        ];
-        $array_keys = array_keys($packages);
-        $str        = implode(', ', $packages);
-        $composer   = new RemoveComposerPackages($packages);
-        $composer->delete();
-        static::consoleLog('The Following Dependencies will be removed from composer.json: '.$str);
-    }
-
     /**
      * @param $packages
      */
@@ -171,22 +124,14 @@ class Preset extends LaravelPreset
         return array_merge(static::packagesToBeAdded(), static::packagesTobeRemoved($packages));
     }
 
-    public static function updateScripts()
-    {
-        copy(__DIR__.'/stubs/app.js', resource_path('js/app.js'));
-        copy(__DIR__.'/stubs/bootstrap.js', resource_path('js/bootstrap.js'));
-    }
-
     public static function updateStyles()
     {
-        File::cleanDirectory(resource_path('sass'));
-        File::put(resource_path('sass/app.sass'), '');
-        static::consoleLog('Styles Updated!');
+        File::deleteDirectory(resource_path('sass'));
+        static::consoleLog('Sass Directory Deleted');
     }
 
-    public static function updatemix()
+    public static function yarnInstall()
     {
-        copy(__DIR__.'/stubs/webpack.mix.js', base_path('webpack.mix.js'));
-        static::consoleLog('webpack.mix.js Has been updated!');
+        exec('yarn');
     }
 }
