@@ -79,7 +79,7 @@ class Preset extends LaravelPreset
     public static function consoleLog($message)
     {
         $out = new ConsoleOutput();
-        $out->writeIn($message);
+        $out->writeLn($message);
     }
 
     public static function install()
