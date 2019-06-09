@@ -6,25 +6,11 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Nadar\PhpComposerReader\ComposerReader;
 use Nadar\PhpComposerReader\RequireSection;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Illuminate\Foundation\Console\Presets\Preset as LaravelPreset;
 
 class Preset extends LaravelPreset
 {
-// This should be added as a dependency of our packages
-
-// check git init before doing this install
-
-// thow an error and abort install if not git initA
-
-// Review Laravel FileSystem
-
-// get the current file content
-
-// File::get($path)
-
-// search and replace the file content
-    // use File::put($path,$contents)
-
     public static function addComposerPackages()
     {
         $reader      = new ComposerReader(base_path('composer.json'));
@@ -39,11 +25,34 @@ class Preset extends LaravelPreset
         $composer->addPackages($rm_packages);
         $composer->updateSection();
         $composer->save();
+        $array_keys = array_keys($rm_packages);
+        $str        = implode(', ', $array_keys);
+        static::consoleLog('The Following Packages are Added '.$str);
+    }
+
+    public static function addPHPCS()
+    {
+        $installed = exec('composer show -N | grep squizlabs/php_codesniffer');
+
+        if (!$installed) {
+            exec('composer require --dev squizlabs/php_codesniffer');
+        }
+
+        copy(__DIR__.'/phpcs.xml', base_path('.phpcs.xml'));
+        static::consoleLog('PHPCS Installed.');
+    }
+
+    public static function addVSCodeConfig()
+    {
+        File::makeDirectory(base_path('.vscode'));
+        copy(__DIR_.'./stubs/.vscode/settings.json', base_path('.vscode/settings.json'));
+        static::consoleLog('VSCODE Config Added.');
     }
 
     public static function cleanSassDirectory()
     {
         File::cleanDirectory(resource_path('sass'));
+        static::consoleLog('SASS Directory Cleaned');
     }
 
     public static function composerInstall()
@@ -60,6 +69,17 @@ class Preset extends LaravelPreset
                 exec('composer require '.$package);
             }
         }
+        $str = implode(', ',$packages);
+        static::consoleLog('The Following Packages Have Been Installed: '. $str);
+    }
+
+    /**
+     * @param $message
+     */
+    public static function consoleLog($message)
+    {
+        $out = new ConsoleOutput();
+        $out->writeIn($message);
     }
 
     public static function install()
@@ -78,10 +98,17 @@ class Preset extends LaravelPreset
 
     public static function packagesToBeAdded()
     {
-        return [
-            'laravel-mix-tailwind' => '^0.1.0'
+        $packages = [
+            'laravel-mix-tailwind'                => '^0.1.0',
+            'inertiajs/inertia-vue'               => 'github:inertiajs/inertia-vue',
+            '@babel/plugin-syntax-dynamic-import' => '^7.2.0'
             // add other packages here
         ];
+        $array_keys = array_keys($packages);
+        $str = implode(', ',$array_keys);
+
+        static::consoleLog('Adding The Folling Packages to package.json: '.$str);
+        return $packages;
     }
 
     /**
@@ -89,7 +116,11 @@ class Preset extends LaravelPreset
      */
     public static function packagesTobeRemoved($packages)
     {
-        return Arr::except($packages, ['popper.js', 'jquery']);
+        $rm_packages = ['popper.js', 'jquery'];
+        $array_keys = array_keys($rm_packages);
+        $str = implode(', ', $array_keys);
+        static::consoleLog('Removing The Following Packages from packages.json: '.$str);
+        return Arr::except($packages, $rm_packages);
     }
 
     public static function removeComposerPackages()
@@ -98,8 +129,11 @@ class Preset extends LaravelPreset
             'inertialjs/inertia-laravel',
             'pragmarx/version'
         ];
+        $array_keys = array_keys($packages);
+        $str = implode(', ',$packages);
         $composer = new RemoveComposerPackages($packages);
         $composer->delete();
+        static::consoleLog('The Following Dependencies will be removed from composer.json: '.$str);
     }
 
     /**
@@ -120,10 +154,12 @@ class Preset extends LaravelPreset
     {
         File::cleanDirectory(resource_path('sass'));
         File::put(resource_path('sass/app.sass'), '');
+        static::consoleLog('Styles Updated!');
     }
 
     public static function updatemix()
     {
         copy(__DIR__.'/stubs/webpack.mix.js', base_path('webpack.mix.js'));
+        static::consoleLog('webpack.mix.js Has been updated!');
     }
 }
