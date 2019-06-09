@@ -17,7 +17,7 @@ class Preset extends LaravelPreset
         copy(__DIR__.'/stubs/Inertia/app.blade.php', resource_path('views/app.blade.php'));
         static::consoleLog('Adding Default Inertia app.blade.php');
 
-        copy(__DIR__.'/stubs/Inertia/Shared/Layout.vue', resource_path('/js/Shared/Layout.vue'));
+        copy(__DIR__.'/stubs/Inertia/Shared/Layout.vue', resource_path('js/Shared/Layout.vue'));
         static::consoleLog('Adding Default Layout of Inertia');
 
         copy(__DIR__.'/stubs/Inertia/webpack.mix.js', base_path('webpack.mix.js'));
