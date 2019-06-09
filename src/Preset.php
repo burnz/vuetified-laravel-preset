@@ -117,8 +117,7 @@ class Preset extends LaravelPreset
     public static function packagesTobeRemoved($packages)
     {
         $rm_packages = ['popper.js', 'jquery'];
-        $array_keys = array_keys($rm_packages);
-        $str = implode(', ', $array_keys);
+        $str = implode(', ', $rm_packages);
         static::consoleLog('Removing The Following Packages from packages.json: '.$str);
         return Arr::except($packages, $rm_packages);
     }
