@@ -40,7 +40,7 @@
   "namespaceResolver.sortNatural": false, // Sort imports using a 'natural order' algorithm
   "namespaceResolver.leadingSeparator": true, // Expand class with leading namespace separator
   // <!-- phpcs plugin -->
-  "phpcs.standard": "../phpcs.xml",
+  "phpcs.standard": "./phpcs.xml",
   "phpcs.executablePath": "./vendor/bin/phpcs",
   "phpcs.ignorePatterns": [
     "*/storage/",

@@ -103,7 +103,7 @@ class Preset extends LaravelPreset
     public static function packagesToBeAdded()
     {
         $packages = [
-            'inertia-vue'               => 'github:inertiajs/inertia-vue',
+            'inertia-vue'                         => 'github:inertiajs/inertia-vue',
             '@babel/plugin-syntax-dynamic-import' => '^7.2.0',
             'vue-template-compiler'               => '^2.6.10'
             // add other packages here
@@ -134,9 +134,16 @@ class Preset extends LaravelPreset
         return array_merge(static::packagesToBeAdded(), static::packagesTobeRemoved($packages));
     }
 
+    public static function updateScripts()
+    {
+        File::delete(resource_path('js/bootstrap.js'));
+        static::consoleLog('Boostrap.js Deleted');
+    }
+
     public static function updateStyles()
     {
         File::deleteDirectory(resource_path('sass'));
-        static::consoleLog('Sass Directory Deleted');
+        File::put(resource_path('assets/sass/app.scss'), '');
+        static::consoleLog('Styles Updated!');
     }
 }

@@ -1,7 +1,15 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
+import Inertia from 'inertia-vue'
+import Vue from 'vue'
 
-require('./bootstrap');
+Vue.use(Inertia)
+
+const app = document.getElementById('app')
+
+new Vue({
+    render: h => h(Inertia, {
+        props: {
+            initialPage: JSON.parse(app.dataset.page),
+            resolveComponent: name => import(`@/Pages/${name}`).then(module => module.default),
+        },
+    }),
+}).$mount(app)
