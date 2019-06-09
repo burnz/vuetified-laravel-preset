@@ -142,7 +142,7 @@ class Preset extends LaravelPreset
 
     public static function updateStyles()
     {
-        File::deleteDirectory(resource_path('sass'));
+        File::cleanDirectory(resource_path('assets/sass'));
         File::put(resource_path('assets/sass/app.scss'), '');
         static::consoleLog('Styles Updated!');
     }
