@@ -29,7 +29,7 @@ class Preset extends LaravelPreset
         File::copyDirectory(__DIR__.'/stubs/Inertia/Pages', resource_path('js/Pages'));
         static::consoleLog('Copying Pages Directory');
 
-        copy(__DIR__.'/stubs/Inertia/routes/web.php',base_path('routes/web.php'));
+        copy(__DIR__.'/stubs/Inertia/routes/web.php', base_path('routes/web.php'));
         static::consoleLog('Copying Example Routes Of Inertia');
         // find a way to add kernel changes by inertia using php filesystem
     }
@@ -89,7 +89,12 @@ class Preset extends LaravelPreset
         static::updatePackages();
         static::composerInstall();
         static::npmInstall();
-        static::consoleLog('FINISHED SETTING UP VUETIFIED. please run npm run watch or npm run dev.')
+        static::consoleLog('FINISHED SETTING UP VUETIFIED. please run npm run watch or npm run dev.');
+    }
+
+    public static function npmInstall()
+    {
+        exec('npm install');
     }
 
     /**
@@ -100,7 +105,7 @@ class Preset extends LaravelPreset
         $packages = [
             'inertiajs/inertia-vue'               => 'github:inertiajs/inertia-vue',
             '@babel/plugin-syntax-dynamic-import' => '^7.2.0',
-            'vue-template-compiler' => '^2.6.10',
+            'vue-template-compiler'               => '^2.6.10'
             // add other packages here
         ];
         $array_keys = array_keys($packages);
@@ -133,10 +138,5 @@ class Preset extends LaravelPreset
     {
         File::deleteDirectory(resource_path('sass'));
         static::consoleLog('Sass Directory Deleted');
-    }
-
-    public static function npmInstall()
-    {
-        exec('npm install');
     }
 }
