@@ -103,7 +103,7 @@ class Preset extends LaravelPreset
     public static function packagesToBeAdded()
     {
         $packages = [
-            'inertiajs/inertia-vue'               => 'github:inertiajs/inertia-vue',
+            'inertia-vue'               => 'github:inertiajs/inertia-vue',
             '@babel/plugin-syntax-dynamic-import' => '^7.2.0',
             'vue-template-compiler'               => '^2.6.10'
             // add other packages here
