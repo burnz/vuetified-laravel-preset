@@ -22,7 +22,9 @@ class Preset extends LaravelPreset
         File::makeDirectory(resource_path('/js/plugins'));
         static::consoleLog('Creating plugins Folder');
 
-        copy(__DIR__.'/stubs/Inertia/Shared/Layout.vue', resource_path('js/Shared/Layout.vue'));
+        // copy(__DIR__.'/stubs/Inertia/Shared/Layout.vue', resource_path('js/Shared/Layout.vue'));
+        copy(__DIR__.'/stubs/vuetify/Shared/HelloWorld.vue', resource_path('js/Shared/HelloWorld.vue'));
+
         static::consoleLog('Adding Default Layout of Inertia');
 
         copy(__DIR__.'/stubs/Inertia/webpack.mix.js', base_path('webpack.mix.js'));
@@ -31,7 +33,9 @@ class Preset extends LaravelPreset
         File::deleteDirectory(resource_path('js/components'));
         static::consoleLog('Components Directory Deleted.');
         File::makeDirectory(resource_path('/js/Pages'));
-        File::copyDirectory(__DIR__.'/stubs/Inertia/Pages', resource_path('js/Pages'));
+        // File::copyDirectory(__DIR__.'/stubs/Inertia/Pages', resource_path('js/Pages'));
+        File::copyDirectory(__DIR__.'/stubs/vuetify/Pages', resource_path('js/Pages'));
+
         static::consoleLog('Copying Pages Directory');
 
         copy(__DIR__.'/stubs/Inertia/routes/web.php', base_path('routes/web.php'));
