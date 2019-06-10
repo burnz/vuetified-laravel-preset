@@ -4,7 +4,7 @@
 
 
 <div align="center">
-  <a href="https://www.youtube.com/embed/5rTqqHm2cWM"><img src="https://user-images.githubusercontent.com/28816690/59180176-cea84400-8b96-11e9-98da-5758ab036432.png" alt="DEMO VIDEO"></a>
+  <a href="https://youtu.be/85ZDW2cy5Eg"><img src="https://user-images.githubusercontent.com/28816690/59180176-cea84400-8b96-11e9-98da-5758ab036432.png" alt="DEMO VIDEO"></a>
 </div>
 
 ## Installation
