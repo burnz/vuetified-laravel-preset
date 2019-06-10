@@ -4,7 +4,7 @@
 
 
 <div align="center">
-  <a href="https://www.youtube.com/embed/5rTqqHm2cWM"><img src="https://www.youtube.com/upload_thumbnail?v=5rTqqHm2cWM&t=hqdefault&ts=1560148642731" alt="IMAGE ALT TEXT"></a>
+  <a href="https://www.youtube.com/embed/5rTqqHm2cWM"><img src="https://i.ytimg.com/vi/5rTqqHm2cWM/hqdefault.jpg" alt="DEMO VIDEO"></a>
 </div>
 
 ## Installation
