@@ -1,5 +1,8 @@
 # Vuetified Laravel Preset
 
+## Demo
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5rTqqHm2cWM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Installation
 
 ```
@@ -27,7 +30,7 @@ inertiajs/inertia-vue
 ```
 
 - The Following Stubs to be added (intertia.js)
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5rTqqHm2cWM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ```
 resources/views/app.blade.php
 app/Http/Kernel.php
