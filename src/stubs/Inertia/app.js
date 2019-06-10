@@ -3,6 +3,8 @@ import Vue from 'vue'
 
 Vue.use(Inertia)
 
+Vue.config.productionTip = false
+
 const app = document.getElementById('app')
 
 new Vue({

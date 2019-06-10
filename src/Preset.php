@@ -106,7 +106,22 @@ class Preset extends LaravelPreset
         $packages = [
             'inertia-vue'                         => 'github:inertiajs/inertia-vue',
             '@babel/plugin-syntax-dynamic-import' => '^7.2.0',
-            'vue-template-compiler'               => '^2.6.10'
+            'vue-template-compiler'               => '^2.6.10',
+            'css-loader'                          => '^2.1.1',
+            'style-loader'                        => '^0.23.1',
+            'stylus'                              => '^0.54.5',
+            'stylus-loader'                       => '^3.0.2',
+            'vuetify-loader'                      => '^1.2.2',
+            'deepmerge'                           => '^3.2.0',
+            'fibers'                              => '^4.0.1',
+            'eslint'                              => '^5.16.0',
+            'eslint-plugin-vue'                   => '^5.2.2',
+            'eslint-plugin-import'                => '^2.17.3',
+            '@fortawesome/fontawesome-free'       => '^5.9.0',
+            '@mdi/font'                           => '^3.6.95',
+            '@mdi/js'                             => '^3.6.95',
+            'material-design-icons-iconfont'      => '^5.0.1'
+
             // add other packages here
         ];
         $array_keys = array_keys($packages);
@@ -121,7 +136,7 @@ class Preset extends LaravelPreset
      */
     public static function packagesTobeRemoved($packages)
     {
-        $rm_packages = ['popper.js', 'jquery'];
+        $rm_packages = ['popper.js', 'jquery', 'axios', 'bootstrap'];
         $str         = implode(', ', $rm_packages);
         static::consoleLog('Removing The Following Packages from packages.json: '.$str);
         return Arr::except($packages, $rm_packages);
@@ -142,6 +157,9 @@ class Preset extends LaravelPreset
 
         copy(__DIR__.'/stubs/Inertia/app.js', resource_path('js/app.js'));
         static::consoleLog('Inertia Default app.js file Added.');
+
+        copy(__DIR__.'/stubs/Inertia/.eslintrc.js', base_path('.eslintrc.js'));
+        static::consoleLog('Added Eslintrc.js');
     }
 
     public static function updateStyles()
