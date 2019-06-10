@@ -1,7 +1,11 @@
 # Vuetified Laravel Preset
 
 ## Demo
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5rTqqHm2cWM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+<div align="center">
+  <a href="https://www.youtube.com/embed/5rTqqHm2cWM"><img src="https://www.youtube.com/upload_thumbnail?v=5rTqqHm2cWM&t=hqdefault&ts=1560148642731" alt="IMAGE ALT TEXT"></a>
+</div>
 
 ## Installation
 
