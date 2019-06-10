@@ -17,6 +17,11 @@ class Preset extends LaravelPreset
         copy(__DIR__.'/stubs/Inertia/app.blade.php', resource_path('views/app.blade.php'));
         static::consoleLog('Adding Default Inertia app.blade.php');
         File::makeDirectory(resource_path('js/Shared'));
+        static::consoleLog('Creating Shared folder');
+
+        File::makeDirectory(resource_path('/js/plugins'));
+        static::consoleLog('Creating plugins Folder');
+
         copy(__DIR__.'/stubs/Inertia/Shared/Layout.vue', resource_path('js/Shared/Layout.vue'));
         static::consoleLog('Adding Default Layout of Inertia');
 
@@ -160,6 +165,9 @@ class Preset extends LaravelPreset
 
         copy(__DIR__.'/stubs/Inertia/.eslintrc.js', base_path('.eslintrc.js'));
         static::consoleLog('Added Eslintrc.js');
+
+        copy(__DIR__.'/stubs/vuetify/plugins/vuetify.js', resource_path('js/plugins/vuetify.js'));
+        static::consoleLog('Added Vuetify.js');
     }
 
     public static function updateStyles()
