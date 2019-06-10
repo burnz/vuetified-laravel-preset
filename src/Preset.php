@@ -27,7 +27,7 @@ class Preset extends LaravelPreset
 
         static::consoleLog('Adding Default Layout of Inertia');
 
-        copy(__DIR__.'/stubs/Inertia/webpack.mix.js', base_path('webpack.mix.js'));
+        copy(__DIR__.'/stubs/vuetify/webpack.mix.js', base_path('webpack.mix.js'));
         static::consoleLog('Adding Default webpack.mix.js for Inertia');
 
         File::deleteDirectory(resource_path('js/components'));
@@ -113,8 +113,10 @@ class Preset extends LaravelPreset
     public static function packagesToBeAdded()
     {
         $packages = [
+            'vuetify'                             => '^1.5.14',
             'inertia-vue'                         => 'github:inertiajs/inertia-vue',
             '@babel/plugin-syntax-dynamic-import' => '^7.2.0',
+            '@babel/preset-env'                   => '^7.4.5',
             'vue-template-compiler'               => '^2.6.10',
             'css-loader'                          => '^2.1.1',
             'style-loader'                        => '^0.23.1',
@@ -129,8 +131,8 @@ class Preset extends LaravelPreset
             '@fortawesome/fontawesome-free'       => '^5.9.0',
             '@mdi/font'                           => '^3.6.95',
             '@mdi/js'                             => '^3.6.95',
-            'material-design-icons-iconfont'      => '^5.0.1'
-
+            'material-design-icons-iconfont'      => '^5.0.1',
+            'roboto-fontface'                     => '^0.10.0'
             // add other packages here
         ];
         $array_keys = array_keys($packages);
@@ -171,7 +173,7 @@ class Preset extends LaravelPreset
         static::consoleLog('Added Eslintrc.js');
 
         copy(__DIR__.'/stubs/vuetify/plugins/vuetify.js', resource_path('js/plugins/vuetify.js'));
-        static::consoleLog('Added Vuetify.js');
+        static::consoleLog('Added Vuetify.js Plugin');
     }
 
     public static function updateStyles()

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
+import 'vuetify/dist/vuetify.min.css'
 
 //? https://vuetifyjs.com/en/framework/icons#using-custom-icons
 
@@ -9,7 +10,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'     //! i
 //import '@fortawesome/fontawesome-free/css/all.css'                      //! iconfont: 'fa'
 //import 'font-awesome/css/font-awesome.min.css'                          //! iconfont: 'fa4'
 
-Vue.use(Vuetify.{
+Vue.use(Vuetify,{
     icons: {
         iconfont: 'md'
     },
