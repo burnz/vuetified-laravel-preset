@@ -1,8 +1,8 @@
-import Inertia from 'inertia-vue'
+import { InertiaApp } from '@inertiajs/inertia-vue'
 import Vue from 'vue'
 import '@/plugins/vuetify'
 
-Vue.use(Inertia)
+Vue.use(InertiaApp)
 
 Vue.config.productionTip = false
 
