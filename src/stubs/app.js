@@ -1,7 +1,7 @@
-import Inertia from 'inertia-vue'
+import { InertiaApp } from '@inertiajs/inertia-vue'
 import Vue from 'vue'
 
-Vue.use(Inertia)
+Vue.use(InertiaApp)
 
 const app = document.getElementById('app')
 
