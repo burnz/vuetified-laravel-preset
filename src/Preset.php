@@ -113,7 +113,7 @@ class Preset extends LaravelPreset
     public static function packagesToBeAdded()
     {
         $packages = [
-            'vue'                                 => '^2.6.10'
+            'vue'                                 => '^2.6.10',
             'vuetify'                             => '^1.5.14',
             '@inertiajs/inertia'                  => '^0.1.3',
             '@inertiajs/inertia-vue'              => '^0.1.1',
