@@ -113,8 +113,10 @@ class Preset extends LaravelPreset
     public static function packagesToBeAdded()
     {
         $packages = [
+            'vue'                                 => '^2.6.10'
             'vuetify'                             => '^1.5.14',
-            'inertia-vue'                         => 'github:inertiajs/inertia-vue',
+            '@inertiajs/inertia'                  => '^0.1.3',
+            '@inertiajs/inertia-vue'              => '^0.1.1',
             '@babel/plugin-syntax-dynamic-import' => '^7.2.0',
             '@babel/preset-env'                   => '^7.4.5',
             'vue-template-compiler'               => '^2.6.10',
@@ -138,7 +140,7 @@ class Preset extends LaravelPreset
         $array_keys = array_keys($packages);
         $str        = implode(', ', $array_keys);
 
-        static::consoleLog('Adding The Folling Packages to package.json: '.$str);
+        static::consoleLog('Adding The Following Packages to package.json: '.$str);
         return $packages;
     }
 
