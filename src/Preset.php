@@ -98,6 +98,13 @@ class Preset extends LaravelPreset
         static::consoleLog('Adding Default webpack.mix.js for Inertia');
     }
 
+    public static function addGitHooks()
+    {
+        copy(__DIR__ . '/stubs/pre-commit', base_path('pre-commit'));
+        copy(__DIR__ . '/stubs/post-commit', base_path('post-commit'));
+        static::consoleLog('Added Git Hook');
+    }
+
     public static function composerInstall()
     {
         $packages = [
@@ -148,9 +155,11 @@ class Preset extends LaravelPreset
         static::updateHTTPKernel();
         static::updateConfig();
         static::npmInstall();
+        static::addGitHooks();
         static::consoleLog('FINISHED SETTING UP VUETIFIED. please run npm run watch or npm run dev.');
     }
 
+    
     public static function npmInstall()
     {
         exec('npm install');
