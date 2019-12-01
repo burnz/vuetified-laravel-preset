@@ -55,6 +55,28 @@ class Preset extends LaravelPreset
         static::consoleLog('PHPCS Installed.');
     }
 
+    public static function addPHPSTAN()
+    {
+        $installed = exec('composer show -N | grep nunomaduro/larastan');
+
+        if (!$installed) {
+            exec('composer require --dev nunomaduro/larastan');
+        }
+
+        copy(__DIR__.'/stubs/phpstan.neon.dist', base_path('phpstan.neon.dist'));
+        static::consoleLog('Added PHPSTAN');
+    }
+
+    public static function addOrchestraBench()
+    {
+        $installed = exec('composer show -N | grep orchestra/testbench');
+
+        if (!$installed) {
+            exec('composer require --dev orchestra/testbench');
+        }
+        static::consoleLog('Added Orchestra Bench');
+    }
+
     public static function addVSCodeConfig()
     {
         File::copyDirectory(__DIR__.'/stubs/.vscode', base_path('.vscode'));
@@ -81,7 +103,7 @@ class Preset extends LaravelPreset
     }
 
     /**
-     * @param $message
+     * @param string $message
      */
     public static function consoleLog($message)
     {
@@ -93,6 +115,8 @@ class Preset extends LaravelPreset
     {
         static::addVSCodeConfig();
         static::addPHPCS();
+        static::addPHPSTAN();
+        static::addOrchestraBench();
         static::addInertiaJs();
         static::updateStyles();
         static::updateScripts();
@@ -114,9 +138,9 @@ class Preset extends LaravelPreset
     {
         $packages = [
             'vue'                                 => '^2.6.10',
-            'vuetify'                             => '^2.0.15',
-            '@inertiajs/inertia'                  => '^0.1.3',
-            '@inertiajs/inertia-vue'              => '^0.1.1',
+            'vuetify'                             => '^2.1.12',
+            '@inertiajs/inertia'                  => '^0.1.7',
+            '@inertiajs/inertia-vue'              => '^0.1.2',
             '@babel/plugin-syntax-dynamic-import' => '^7.2.0',
             '@babel/preset-env'                   => '^7.4.5',
             'vue-template-compiler'               => '^2.6.10',
@@ -124,7 +148,7 @@ class Preset extends LaravelPreset
             'style-loader'                        => '^0.23.1',
             'stylus'                              => '^0.54.5',
             'stylus-loader'                       => '^3.0.2',
-            'vuetify-loader'                      => '^1.3.0',
+            'vuetify-loader'                      => '^1.4.1',
             'deepmerge'                           => '^3.2.0',
             'fibers'                              => '^4.0.1',
             'eslint'                              => '^5.16.0',
