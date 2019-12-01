@@ -9,38 +9,57 @@ use Illuminate\Foundation\Console\Presets\Preset as LaravelPreset;
 
 class Preset extends LaravelPreset
 {
+    public static function updateConfig()
+    {
+        copy(__DIR__.'/stubs/config/version.yml', base_path('config/version.yml'));
+        static::consoleLog('Adding Version YML file');
+    }
+    public static function addBabelRC()
+    {
+        copy(__DIR__.'/stubs/.babelrc', base_path('.babelrc'));
+        static::consoleLog('Adding .babelrc file');
+    }
+
+    public static function addBladeFile()
+    {
+        copy(__DIR__.'/stubs/resources/views/app.blade.php', resource_path('views/app.blade.php'));
+        static::consoleLog('Adding Default Inertia app.blade.php');
+    }
+
     public static function addInertiaJs()
     {
-        copy(__DIR__.'/stubs/Inertia/.babelrc', base_path('.babelrc'));
-        static::consoleLog('Adding .babelrc file');
-
-        copy(__DIR__.'/stubs/Inertia/app.blade.php', resource_path('views/app.blade.php'));
-        static::consoleLog('Adding Default Inertia app.blade.php');
         File::makeDirectory(resource_path('js/Shared'));
         static::consoleLog('Creating Shared folder');
 
         File::makeDirectory(resource_path('/js/plugins'));
         static::consoleLog('Creating plugins Folder');
 
-        // copy(__DIR__.'/stubs/Inertia/Shared/Layout.vue', resource_path('js/Shared/Layout.vue'));
-        copy(__DIR__.'/stubs/vuetify/Shared/HelloWorld.vue', resource_path('js/Shared/HelloWorld.vue'));
-
-        static::consoleLog('Adding Default Layout of Inertia');
-
-        copy(__DIR__.'/stubs/vuetify/webpack.mix.js', base_path('webpack.mix.js'));
-        static::consoleLog('Adding Default webpack.mix.js for Inertia');
-
         File::deleteDirectory(resource_path('js/components'));
         static::consoleLog('Components Directory Deleted.');
+
         File::makeDirectory(resource_path('/js/Pages'));
-        // File::copyDirectory(__DIR__.'/stubs/Inertia/Pages', resource_path('js/Pages'));
-        File::copyDirectory(__DIR__.'/stubs/vuetify/Pages', resource_path('js/Pages'));
+        static::consoleLog('Creating Pages folder');
 
-        static::consoleLog('Copying Pages Directory');
+        copy(__DIR__.'/stubs/resources/js/Shared/HelloWorld.vue', resource_path('js/Shared/HelloWorld.vue'));
+        static::consoleLog('Adding Hello World Shared Component');
 
-        copy(__DIR__.'/stubs/Inertia/routes/web.php', base_path('routes/web.php'));
+        File::copyDirectory(__DIR__.'/stubs/resources/js/Pages', resource_path('js/Pages'));
+        static::consoleLog('Adding Pages');
+
+        copy(__DIR__.'/stubs/routes/web.php', base_path('routes/web.php'));
         static::consoleLog('Copying Example Routes Of Inertia');
         // find a way to add kernel changes by inertia using php filesystem
+    }
+
+    public static function addOrchestraBench()
+    {
+        $installed = exec('composer show -N | grep orchestra/testbench');
+
+        if (!$installed) {
+            exec('composer require --dev orchestra/testbench');
+        }
+
+        static::consoleLog('Added Orchestra Bench');
     }
 
     public static function addPHPCS()
@@ -67,27 +86,28 @@ class Preset extends LaravelPreset
         static::consoleLog('Added PHPSTAN');
     }
 
-    public static function addOrchestraBench()
-    {
-        $installed = exec('composer show -N | grep orchestra/testbench');
-
-        if (!$installed) {
-            exec('composer require --dev orchestra/testbench');
-        }
-        static::consoleLog('Added Orchestra Bench');
-    }
-
     public static function addVSCodeConfig()
     {
         File::copyDirectory(__DIR__.'/stubs/.vscode', base_path('.vscode'));
         static::consoleLog('VSCODE Config Added.');
     }
 
+    public static function addWebpackMix()
+    {
+        copy(__DIR__.'/stubs/webpack.mix.js', base_path('webpack.mix.js'));
+        static::consoleLog('Adding Default webpack.mix.js for Inertia');
+    }
+
     public static function composerInstall()
     {
         $packages = [
             'inertiajs/inertia-laravel',
-            'pragmarx/version'
+            'tightenco/ziggy',
+            'pragmarx/version',
+            'reinink/remember-query-strings',
+            'spatie/laravel-permission',
+            'barryvdh/laravel-cors',
+            'envant/fireable'
         ];
 
         foreach ($packages as $package) {
@@ -117,11 +137,16 @@ class Preset extends LaravelPreset
         static::addPHPCS();
         static::addPHPSTAN();
         static::addOrchestraBench();
+        static::addBabelRC();
+        static::addWebpackMix();
+        static::addBladeFile();
         static::addInertiaJs();
         static::updateStyles();
         static::updateScripts();
         static::updatePackages();
         static::composerInstall();
+        static::updateHTTPKernel();
+        static::updateConfig();
         static::npmInstall();
         static::consoleLog('FINISHED SETTING UP VUETIFIED. please run npm run watch or npm run dev.');
     }
@@ -180,6 +205,12 @@ class Preset extends LaravelPreset
         return Arr::except($packages, $rm_packages);
     }
 
+    public static function updateHTTPKernel()
+    {
+        File::delete(app_path('Http/Kernel.php'));
+        copy(__DIR__.'/stubs/app/Http/Kernel.php', base_path('app/Http/Kernel.php'));
+    }
+
     /**
      * @param $packages
      */
@@ -193,13 +224,13 @@ class Preset extends LaravelPreset
         File::delete(resource_path('js/bootstrap.js'));
         static::consoleLog('Boostrap.js Deleted');
 
-        copy(__DIR__.'/stubs/Inertia/app.js', resource_path('js/app.js'));
+        copy(__DIR__.'/stubs/resources/js/app.js', resource_path('js/app.js'));
         static::consoleLog('Inertia Default app.js file Added.');
 
-        copy(__DIR__.'/stubs/Inertia/.eslintrc.js', base_path('.eslintrc.js'));
+        copy(__DIR__.'/stubs/.eslintrc.js', base_path('.eslintrc.js'));
         static::consoleLog('Added Eslintrc.js');
 
-        copy(__DIR__.'/stubs/vuetify/plugins/vuetify.js', resource_path('js/plugins/vuetify.js'));
+        copy(__DIR__.'/stubs/resources/js/plugins/vuetify.js', resource_path('js/plugins/vuetify.js'));
         static::consoleLog('Added Vuetify.js Plugin');
     }
 

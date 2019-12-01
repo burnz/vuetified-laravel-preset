@@ -1,168 +1,138 @@
 # Vuetified Laravel Preset
-
-## Demo
-
-
-<div align="center">
-  <a href="https://youtu.be/85ZDW2cy5Eg"><img src="https://user-images.githubusercontent.com/28816690/59180176-cea84400-8b96-11e9-98da-5758ab036432.png" alt="DEMO VIDEO"></a>
-</div>
+- Quick Install Vuetify and InertiaJS with Some Goodies You Need To Start a Project
 
 ## Installation
 
-```
+Install Package
+```sh
 composer require codeitlikemiley/vuetified-laravel-preset
 ```
 
-## Usage
-
-### Scafold Basic Set Up
-
-- The Following Composer json to be added
-
-```
-inertiajs/inertia-laravel
-squizlabs/php_codesniffer
-pragmarx/version
-jackiedo/dotenv-editor
+Run Command To Scaffold Preset
+```sh
+php artisan preset vuetified
 ```
 
-- The Following NPM packages to be added
+## Composer Packages Included
 
+```php
+'inertiajs/inertia-laravel',
+'tightenco/ziggy',
+'pragmarx/version',
+'reinink/remember-query-strings',
+'spatie/laravel-permission',
+'barryvdh/laravel-cors',
+'envant/fireable'
 ```
-inertiajs/inertia-vue
+
+## NPM Packages Included
+
+```php
+vue
+vuetify
+@inertiajs/inertia
+@inertiajs/inertia-vue
 @babel/plugin-syntax-dynamic-import
+@babel/preset-env
+vue-template-compiler
+css-loader
+style-loader
+stylus
+stylus-loader
+vuetify-loader
+deepmerge
+fibers
+eslint
+eslint-plugin-vue
+eslint-plugin-import
+@fortawesome/fontawesome-free
+font-awesome
+@mdi/font
+@mdi/js
+material-design-icons-iconfont
+roboto-fontface
 ```
 
-- The Following Stubs to be added (intertia.js)
+## The Following Stubs Added
 
-```
+```php
 resources/views/app.blade.php
 app/Http/Kernel.php
 webpack.mix.js
 .babelrc
-app.js (inertia enable + plugins enabled)
-resouces/js/Shared/Layout.vue
-resources/js/Pages
+resouces/js/app.js
+resouces/js/plugins/vuetify.js
+resouces/js/Shared/HelloWorld.vue
+resources/js/Pages/Welcome.vue
+.eslintrc.js
+phpcs.xml
+phpstan.neon.dist
+post-commit
+pre-commit
 ```
 
-- the following stubs to be added Vuetify
+## Enable Git Hooks
+- This Will Use PHPCS to Check Your Code (pre-commit)
+- This Will Run `php artisan code:analyse` during (post-commit)
 
-```
-
-```
-
-- The Following Stubs Be added on root folder
-
-```
-.vscode
-.phpcs.xml
-```
-
-- The Following Stube Be added on .git folder
-
-```
+```sh
 pre-commit
 post-commit
 ```
-
+Make File Executable
 ```
-php artisan preset vuetified
-
-Procedues
-// Remove Unneccesarry Packages
-// Add VSCODE Settings
-// Add PHPCS linting and Fix
-// Add app.js (plugins Ready)
-// Add Options to Install Tailwind / Vuetify
-// Scaffold Inertia.js
+chmod +x pre-commit
+chmod +x post-commit
 ```
+Move To `.git/hooks`
 
-### Scaffold A Laravel Echo Server Set Up
-
-- The Following Stubs Will Be Used
-
-```
-config/echo.php
-.env.echo
-websockets.js
-resources/js/plugins/laravel-echo-server
+```sh
+cp pre-commit .git/hooks/pre-commit
+cp post-commit .git/hooks/post-commit
 ```
 
-- The Following Composer Dependencies will be Installed
-
+## Enable Git Tags
+- add to .env
+```env
+VERSION_GIT_REMOTE_REPOSITORY=https://github.com/username/projectname.git
 ```
-predis/predis
-
+- Read config/version.yml
 ```
-
-- The Following NPM Packages wil be Installed
-
+current:
+  label: v
+  major: 1
+  minor: 0
+  patch: 0
 ```
-laravel-echo-server
-laravel-echo
-sqlite3
-socket.io-client
+- Run this command where in version is v1.0.0 from the version.yml
+```sh
+git tag -a -f v1.0.5
 ```
+- Everytime you need make commit the version is updated You can use that version number to create it before pushing to remote Push tags to remote
 
-- To Install And Scaffold This Run
-
+```sh
+git push origin --tags
 ```
-php artisan echo:install
-
-Procedures
-// install predis is found on composer.json
-// add to packages.json needed packages
-// copy stubs
-// append to .env new ENV VARS
-// generate echo keys
-// ask if we wanna use ssl cert
-// run valet secure and edit env var
-// echo uncomment // App\Providers\BroadcastServiceProvider::class
-// Add mixins stubs for listening to frontend broadcast
-// echo `node websockets` to run laravel echo server
-
+- To remove remote tags
+```sh
+git push --delete origin v1.0.0
 ```
-
-- To Remove Laravel Echo Run this
-
+- type vim .git/config and add this
+```sh
+[remote "upstream"]
+    url = <redacted>
+    fetch = +refs/heads/*:refs/remotes/upstream/*
+    fetch = +refs/tags/*:refs/tags/*
 ```
-php artisan echo:uninstall
+## VSCODE
+- CTRL+ X (OPEN EXTENSIONS)
+- Install  Settings Sync
+- CTRL +SHIFT + P (OPEN COMMAND PALETTE)
+- type `Sync:Download Settings`
 
-Procedures
-// remove predis on composer.json
-// remove all added packages in packages.json
-// remove all stubs that was copied
-// remove all .env VARS appended
-// issue valet unsecure command if ECHO_PROTOCOL=https
-// remove sqlite file if ECHO_DB=sqlite
-```
-
-### Add Laravel Websockets
-
-- The Following Composer Dependencies Will Be Installed
-
-```
-beyondcode/laravel-websockets
-pusher/pusher-php-server
-```
-
-- The Following NPM Package Will Be Installed
-
-```
-laravel-echo
-pusher-js
-```
-
-- To Install and Scaffold Laravel Websockets run
-
-```
-php artisan websockets:install
-
-Procedures
-// Check Composer.json for Dependencies
-// Check For Needed NPM Dependencies
-// add laravel-websockets.js stub and be loaded in plugins
-// ask if you want to install valet ssl cert
-// append to ENV needed ENV VARS
-// Add mixins stubs for listening to frontend broadcast
+## Set Default PHP Formatter
+```txt
+right click on any open php file
+choose "Format Document With"
+choose "php-fmt"
 ```
