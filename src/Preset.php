@@ -9,11 +9,6 @@ use Illuminate\Foundation\Console\Presets\Preset as LaravelPreset;
 
 class Preset extends LaravelPreset
 {
-    public static function updateConfig()
-    {
-        copy(__DIR__.'/stubs/config/version.yml', base_path('config/version.yml'));
-        static::consoleLog('Adding Version YML file');
-    }
     public static function addBabelRC()
     {
         copy(__DIR__.'/stubs/.babelrc', base_path('.babelrc'));
@@ -24,6 +19,13 @@ class Preset extends LaravelPreset
     {
         copy(__DIR__.'/stubs/resources/views/app.blade.php', resource_path('views/app.blade.php'));
         static::consoleLog('Adding Default Inertia app.blade.php');
+    }
+
+    public static function addGitHooks()
+    {
+        copy(__DIR__.'/stubs/pre-commit', base_path('pre-commit'));
+        copy(__DIR__.'/stubs/post-commit', base_path('post-commit'));
+        static::consoleLog('Added Git Hook');
     }
 
     public static function addInertiaJs()
@@ -98,13 +100,6 @@ class Preset extends LaravelPreset
         static::consoleLog('Adding Default webpack.mix.js for Inertia');
     }
 
-    public static function addGitHooks()
-    {
-        copy(__DIR__ . '/stubs/pre-commit', base_path('pre-commit'));
-        copy(__DIR__ . '/stubs/post-commit', base_path('post-commit'));
-        static::consoleLog('Added Git Hook');
-    }
-
     public static function composerInstall()
     {
         $packages = [
@@ -159,7 +154,6 @@ class Preset extends LaravelPreset
         static::consoleLog('FINISHED SETTING UP VUETIFIED. please run npm run watch or npm run dev.');
     }
 
-    
     public static function npmInstall()
     {
         exec('npm install');
@@ -182,7 +176,7 @@ class Preset extends LaravelPreset
             'style-loader'                        => '^0.23.1',
             'stylus'                              => '^0.54.5',
             'stylus-loader'                       => '^3.0.2',
-            'vuetify-loader'                      => '^1.4.1',
+            'vuetify-loader'                      => '^1.3.1',
             'deepmerge'                           => '^3.2.0',
             'fibers'                              => '^4.0.1',
             'eslint'                              => '^5.16.0',
@@ -212,6 +206,12 @@ class Preset extends LaravelPreset
         $str         = implode(', ', $rm_packages);
         static::consoleLog('Removing The Following Packages from packages.json: '.$str);
         return Arr::except($packages, $rm_packages);
+    }
+
+    public static function updateConfig()
+    {
+        copy(__DIR__.'/stubs/config/version.yml', base_path('config/version.yml'));
+        static::consoleLog('Adding Version YML file');
     }
 
     public static function updateHTTPKernel()
