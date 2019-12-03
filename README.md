@@ -34,13 +34,13 @@ npm run watch
 ## Composer Packages Included
 
 ```php
-'inertiajs/inertia-laravel',
-'tightenco/ziggy',
-'pragmarx/version',
-'reinink/remember-query-strings',
-'spatie/laravel-permission',
-'barryvdh/laravel-cors',
-'envant/fireable'
+inertiajs/inertia-laravel
+tightenco/ziggy
+pragmarx/version
+reinink/remember-query-strings
+spatie/laravel-permission
+barryvdh/laravel-cors
+envant/fireable
 ```
 
 ## NPM Packages Included
