@@ -149,9 +149,9 @@ class Preset extends LaravelPreset
         static::composerInstall();
         static::updateHTTPKernel();
         static::updateConfig();
+        static::overridePackages();
         static::npmInstall();
         static::addGitHooks();
-        static::overridePackages();
         static::consoleLog('FINISHED SETTING UP VUETIFIED. please run npm run watch or npm run dev.');
     }
 
@@ -162,7 +162,7 @@ class Preset extends LaravelPreset
 
     public static function overridePackages()
     {
-        exec('yarn add vuetify-loader@1.3.1 laravel-mix@5.0.0 -D');
+        exec('npm i -S vuetify-loader@1.3.1 laravel-mix@5.0.0');
     }
 
     /**
