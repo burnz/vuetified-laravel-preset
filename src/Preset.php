@@ -162,7 +162,7 @@ class Preset extends LaravelPreset
 
     public static function overridePackages()
     {
-        exec('yarn add vuetify-loader@1.3.1 laravel-mix@5.0.0');
+        exec('yarn add vuetify-loader@1.3.1 laravel-mix@5.0.0 -D');
     }
 
     /**
