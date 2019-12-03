@@ -170,7 +170,7 @@ class Preset extends LaravelPreset
             '@inertiajs/inertia'                  => '^0.1.7',
             '@inertiajs/inertia-vue'              => '^0.1.2',
             '@babel/plugin-syntax-dynamic-import' => '^7.7.4',
-            '@babel/preset-env'                   => '^7.7.5',
+            '@babel/preset-env'                   => '^7.7.4',
             'vue-template-compiler'               => '^2.6.10',
             'css-loader'                          => '^3.2.1',
             'style-loader'                        => '^1.0.1',
