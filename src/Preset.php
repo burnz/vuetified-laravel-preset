@@ -176,7 +176,7 @@ class Preset extends LaravelPreset
             'style-loader'                        => '^0.23.1',
             'stylus'                              => '^0.54.5',
             'stylus-loader'                       => '^3.0.2',
-            'vuetify-loader'                      => '^1.3.1',
+            'vuetify-loader'                      => '^1.3.0',
             'deepmerge'                           => '^3.2.0',
             'fibers'                              => '^4.0.1',
             'eslint'                              => '^5.16.0',
@@ -187,7 +187,8 @@ class Preset extends LaravelPreset
             '@mdi/font'                           => '^3.6.95',
             '@mdi/js'                             => '^3.6.95',
             'material-design-icons-iconfont'      => '^5.0.1',
-            'roboto-fontface'                     => '^0.10.0'
+            'roboto-fontface'                     => '^0.10.0',
+            'vue-loader'                          => '^15.7.2'
             // add other packages here
         ];
         $array_keys = array_keys($packages);
