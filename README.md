@@ -19,7 +19,7 @@ composer require codeitlikemiley/vuetified-laravel-preset
 php artisan preset vuetified
 ```
 
-- Compile Assets (note: this will intall laravel mix 5.0.0 DevDependencies)
+- Compile Assets (note: this will install laravel mix 5.0.0 DevDependencies)
 
 ```sh
 npm run dev
