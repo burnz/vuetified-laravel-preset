@@ -1,16 +1,31 @@
 # Vuetified Laravel Preset
+
 - Quick Install Vuetify and InertiaJS with Some Goodies You Need To Start a Project
 
 ## Installation
 
-Install Package
+- Install Package
+
 ```sh
 composer require codeitlikemiley/vuetified-laravel-preset
 ```
 
-Run Command To Scaffold Preset
+- Run Command To Scaffold Preset
+
 ```sh
 php artisan preset vuetified
+```
+
+- Compile Assets (note: this will intall laravel mix 5.0.0 DevDependencies)
+
+```sh
+npm run dev
+```
+
+- Development
+
+```sh
+npm run watch
 ```
 
 ## Composer Packages Included
@@ -32,17 +47,9 @@ vue
 vuetify
 @inertiajs/inertia
 @inertiajs/inertia-vue
-@babel/plugin-syntax-dynamic-import
-@babel/preset-env
-vue-template-compiler
-css-loader
-style-loader
-stylus
-stylus-loader
 vuetify-loader
 deepmerge
 fibers
-eslint
 eslint-plugin-vue
 eslint-plugin-import
 @fortawesome/fontawesome-free
@@ -72,6 +79,7 @@ pre-commit
 ```
 
 ## Enable Git Hooks
+
 - This Will Use PHPCS to Check Your Code (pre-commit)
 - This Will Run `php artisan code:analyse` during (post-commit)
 
@@ -79,11 +87,14 @@ pre-commit
 pre-commit
 post-commit
 ```
+
 Make File Executable
+
 ```
 chmod +x pre-commit
 chmod +x post-commit
 ```
+
 Move To `.git/hooks`
 
 ```sh
@@ -92,11 +103,15 @@ cp post-commit .git/hooks/post-commit
 ```
 
 ## Enable Git Tags
+
 - add to .env
+
 ```env
 VERSION_GIT_REMOTE_REPOSITORY=https://github.com/username/projectname.git
 ```
+
 - Read config/version.yml
+
 ```
 current:
   label: v
@@ -104,35 +119,97 @@ current:
   minor: 0
   patch: 0
 ```
+
 - Run this command where in version is v1.0.0 from the version.yml
+
 ```sh
 git tag -a -f v1.0.5
 ```
+
 - Everytime you need make commit the version is updated You can use that version number to create it before pushing to remote Push tags to remote
 
-```sh
-git push origin --tags
-```
-- To remove remote tags
-```sh
-git push --delete origin v1.0.0
-```
-- type vim .git/config and add this
+- type vim .git/config and add this, this allows you to easily push tags to remote
+
 ```sh
 [remote "upstream"]
     url = <redacted>
     fetch = +refs/heads/*:refs/remotes/upstream/*
     fetch = +refs/tags/*:refs/tags/*
 ```
+
+- Push Tags to Remote
+
+```sh
+git push origin --tags
+```
+
+- To remove remote tags
+
+```sh
+git push --delete origin v1.0.0
+```
+
+- if your using private repo you can run this command so you can easily push to your repo
+
+```sh
+git config core.sshCommand "ssh -i ~/.ssh/id_codeitlikemiley_gh"
+```
+
+- This will add Your Private Key in your .git/config file
+
+```sh
+// .git/config
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+    logallrefupdates = true
+    // IT WILL ADD THIS LINE
+    sshCommand= ssh -i ~/.ssh/id_codeitlikemiley_gh
+    editor = code
+```
+
+- If you wanna define You git Name and Email type:
+
+```sh
+git config user.name "Codeitlikemiley"
+git config user.email "codeitlikemiley@gmail.com"
+```
+
+- This will add Your Credentials in .git/config file
+
+```sh
+// .git/config
+[user]
+    name = "Gold Coders LTD"
+    email = "goldcoders@protonmail.com"
+```
+
 ## VSCODE
+
 - CTRL+ X (OPEN EXTENSIONS)
-- Install  Settings Sync
+- Install Settings Sync
 - CTRL +SHIFT + P (OPEN COMMAND PALETTE)
 - type `Sync:Download Settings`
+- Edit `.vscode/settings.json` (this is preconfigured to work in linux) check path of executables to avoid problems)
 
 ## Set Default PHP Formatter
+
 ```txt
 right click on any open php file
 choose "Format Document With"
 choose "php-fmt"
+```
+
+## Run PhpUnit , Larastan and PHP Insights
+
+- Create an Alias t,tt,ttt or an shell script (If your using windows use git bash)
+
+```sh
+//t
+./vendor/bin/phpunit
+//tt
+./vendor/bin/phpstan analyse
+//ttt
+./vendor/bin/phpinsights
 ```
