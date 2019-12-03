@@ -151,12 +151,18 @@ class Preset extends LaravelPreset
         static::updateConfig();
         static::npmInstall();
         static::addGitHooks();
+        static::overridePackages();
         static::consoleLog('FINISHED SETTING UP VUETIFIED. please run npm run watch or npm run dev.');
     }
 
     public static function npmInstall()
     {
         exec('npm install');
+    }
+
+    public static function overridePackages()
+    {
+        exec('yarn add vuetify-loader@1.3.1 laravel-mix@5.0.0');
     }
 
     /**
@@ -169,17 +175,9 @@ class Preset extends LaravelPreset
             'vuetify'                             => '^2.1.12',
             '@inertiajs/inertia'                  => '^0.1.7',
             '@inertiajs/inertia-vue'              => '^0.1.2',
-            '@babel/plugin-syntax-dynamic-import' => '^7.7.4',
-            '@babel/preset-env'                   => '^7.7.4',
-            'vue-template-compiler'               => '^2.6.10',
-            'css-loader'                          => '^3.2.1',
-            'style-loader'                        => '^1.0.1',
-            'stylus'                              => '^0.54.7',
-            'stylus-loader'                       => '^3.0.2',
             'vuetify-loader'                      => '^1.3.0',
             'deepmerge'                           => '^4.2.2',
             'fibers'                              => '^4.0.2',
-            'eslint'                              => '^6.7.2',
             'eslint-plugin-vue'                   => '^6.0.1',
             'eslint-plugin-import'                => '^2.18.2',
             '@fortawesome/fontawesome-free'       => '^5.11.2',
@@ -188,7 +186,6 @@ class Preset extends LaravelPreset
             '@mdi/js'                             => '^4.6.95',
             'material-design-icons-iconfont'      => '^5.0.1',
             'roboto-fontface'                     => '^0.10.0',
-            'vue-loader'                          => '^15.7.2'
             // add other packages here
         ];
         $array_keys = array_keys($packages);
