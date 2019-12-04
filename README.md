@@ -19,7 +19,7 @@ composer require codeitlikemiley/vuetified-laravel-preset
 php artisan preset vuetified
 ```
 
-- Compile Assets (note: this will intall laravel mix 5.0.0 DevDependencies)
+- Compile Assets (note: this will install laravel mix 5.0.0 DevDependencies)
 
 ```sh
 npm run dev
@@ -34,13 +34,13 @@ npm run watch
 ## Composer Packages Included
 
 ```php
-'inertiajs/inertia-laravel',
-'tightenco/ziggy',
-'pragmarx/version',
-'reinink/remember-query-strings',
-'spatie/laravel-permission',
-'barryvdh/laravel-cors',
-'envant/fireable'
+inertiajs/inertia-laravel
+tightenco/ziggy
+pragmarx/version
+reinink/remember-query-strings
+spatie/laravel-permission
+barryvdh/laravel-cors
+envant/fireable
 ```
 
 ## NPM Packages Included
