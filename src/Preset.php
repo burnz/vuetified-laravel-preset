@@ -162,7 +162,7 @@ class Preset extends LaravelPreset
 
     public static function overridePackages()
     {
-        exec('npm i -S vuetify-loader@1.3.1 laravel-mix@5.0.0');
+        exec('npm i -S laravel-mix@5.0.0');
     }
 
     /**
@@ -171,21 +171,21 @@ class Preset extends LaravelPreset
     public static function packagesToBeAdded()
     {
         $packages = [
-            'vue'                                 => '^2.6.10',
-            'vuetify'                             => '^2.1.12',
-            '@inertiajs/inertia'                  => '^0.1.7',
-            '@inertiajs/inertia-vue'              => '^0.1.2',
-            'vuetify-loader'                      => '^1.3.0',
-            'deepmerge'                           => '^4.2.2',
-            'fibers'                              => '^4.0.2',
-            'eslint-plugin-vue'                   => '^6.0.1',
-            'eslint-plugin-import'                => '^2.18.2',
-            '@fortawesome/fontawesome-free'       => '^5.11.2',
-            'font-awesome'                        => '^4.7.0',
-            '@mdi/font'                           => '^4.6.95',
-            '@mdi/js'                             => '^4.6.95',
-            'material-design-icons-iconfont'      => '^5.0.1',
-            'roboto-fontface'                     => '^0.10.0',
+            'vue'                            => '^2.6.10',
+            'vuetify'                        => '^2.1.12',
+            '@inertiajs/inertia'             => '^0.1.7',
+            '@inertiajs/inertia-vue'         => '^0.1.2',
+            'vuetify-loader'                 => '^1.4.3',
+            'deepmerge'                      => '^4.2.2',
+            'fibers'                         => '^4.0.2',
+            'eslint-plugin-vue'              => '^6.0.1',
+            'eslint-plugin-import'           => '^2.18.2',
+            '@fortawesome/fontawesome-free'  => '^5.11.2',
+            'font-awesome'                   => '^4.7.0',
+            '@mdi/font'                      => '^4.6.95',
+            '@mdi/js'                        => '^4.6.95',
+            'material-design-icons-iconfont' => '^5.0.1',
+            'roboto-fontface'                => '^0.10.0'
             // add other packages here
         ];
         $array_keys = array_keys($packages);
